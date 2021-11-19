@@ -1,5 +1,5 @@
 import { Switch, BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
-import { Create, Recipes, Materials, Login, Register, Request } from './pages'
+import { Recipes, Materials, Login, Register, Request } from './pages'
 
 function App() {
   return (
@@ -12,6 +12,7 @@ function App() {
         <Route exact path='/register' component={Register} />
         <Route exact path='/recipes' component={Recipes} />
         <Route exact path='/materials' component={Materials} />
+        <Route exact path='/request' component={Request} />
       </Switch>
     </Router>
   )
