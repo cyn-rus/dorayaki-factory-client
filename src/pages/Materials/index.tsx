@@ -1,25 +1,38 @@
 import { useState, useEffect } from 'react'
 import Modal  from 'react-modal'
-import { Template, MaterialCardContainer, AddMaterialModal } from '../../components'
+import { Template, MaterialCardContainer, AddMaterialModal, EditMaterialModal } from '../../components'
 import { axios } from '../../api'
+import { MaterialType } from '../../types'
 
 const Materials = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [materials, setMaterials] = useState([])
+  const [isEditModalOpen, setEditModalOpen] = useState(false)
+  const [editMaterial, setEditMaterial] = useState<MaterialType>()
 
   useEffect(() => {
     axios.get('/materials')
       .then(function (res) {
         setMaterials(res.data)
       })
-  }, [isModalOpen])
+  }, [isAddModalOpen, isEditModalOpen])
 
   function closeModal() {
-    setIsModalOpen(false)
+    setIsAddModalOpen(false)
   }
 
   function openModal() {
-    setIsModalOpen(true)
+    setIsAddModalOpen(true)
+  }
+
+  function openEdit(material: MaterialType) {
+    setEditModalOpen(true)
+    setEditMaterial(material)
+  }
+
+  function closeEdit() {
+    setEditModalOpen(false)
+    setEditMaterial(undefined)
   }
 
   return (
@@ -29,15 +42,25 @@ const Materials = () => {
           <h1>Materials</h1>
           <h2 className='add-material' onClick={openModal}>Add Material</h2>
         </div>
+        <MaterialCardContainer materials={materials} onEdit={openEdit} />
+      </div>
 
       <Modal
         ariaHideApp={false}
-        isOpen={isModalOpen}
+        isOpen={isAddModalOpen}
       >
         <AddMaterialModal />
         <button className='close-modal' onClick={closeModal}>Close</button>
       </Modal>
-      </div>
+
+      <Modal
+        ariaHideApp={false}
+        isOpen={isEditModalOpen}
+      >
+        <EditMaterialModal material={editMaterial} />
+        <button className='clode-modal' onClick={closeEdit}>Close</button>
+      </Modal>
+
     </Template>
   )
 
