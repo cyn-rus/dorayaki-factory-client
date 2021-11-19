@@ -5,8 +5,8 @@ WORKDIR /app
 COPY package.json .
 COPY tsconfig.json .
 COPY yarn.lock .
-RUN npm install --silent
+RUN yarn install --silent
 
 COPY . .
 
-CMD ["npm", "start"]
+CMD ["yarn", "start"]
