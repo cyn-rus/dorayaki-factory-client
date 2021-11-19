@@ -3,13 +3,14 @@ import type { MaterialType } from '../../types'
 
 interface Props {
   materials: MaterialType[]
+  onEdit: Function
 }
 
-const MaterialCardContainer = ({materials}: Props) => {
+const MaterialCardContainer = ({materials, onEdit}: Props) => {
   return (
     <div className='card-container-material'>
       {materials.map((material, idx: number) =>
-        <MaterialCard material={material} key={idx} />
+        <MaterialCard material={material} onEdit={onEdit} key={idx} />
       )}
     </div>
   )
