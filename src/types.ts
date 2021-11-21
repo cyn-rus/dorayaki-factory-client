@@ -7,3 +7,8 @@ export interface MaterialType {
   nama_bahan: string
   stok: number
 }
+
+export interface LogFormType {
+  type: string
+  placeholder: string
+}
