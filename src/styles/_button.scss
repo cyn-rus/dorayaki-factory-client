@@ -1,0 +1,33 @@
+button {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  border: none;
+  width: fit-content;
+  background-color: $blue;
+  color: $dark-purple;
+  font-weight: bold;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: $dark-blue;
+    cursor: pointer;
+    color: $purple;
+  }
+}
+
+.submit-button {
+  font-size: 1rem;
+  padding: 0.3rem 0.7rem;
+}
+
+.add-button {
+  color: $orange;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
