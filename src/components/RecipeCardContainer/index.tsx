@@ -7,7 +7,7 @@ interface Props {
 
 const RecipeCardContainer = ({recipes}: Props) => {
   return (
-    <div className='card-container-recipe'>
+    <div className='card-container card-container-recipe'>
       {recipes.map((recipe, idx: number) =>
         <RecipeCard recipe={recipe} key={idx} />
       )}
