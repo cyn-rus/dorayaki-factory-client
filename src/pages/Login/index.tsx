@@ -2,7 +2,7 @@ import { useHistory } from "react-router-dom"
 import { Formik, Field, Form, FormikProps, FormikValues } from "formik"
 import { object, string } from 'yup'
 import { axios } from "../../api"
-import { Template } from "../../components"
+import { LogFormType } from '../../types';
 
 interface LoginType {
   username: string
@@ -21,6 +21,15 @@ const validationSchema = object().shape({
 
 const Login = () => {
   const history = useHistory()
+  const forms: LogFormType[] = [{
+    type: 'username',
+    placeholder: 'Username',
+  }, {
+    type: 'password',
+    placeholder: 'Password'
+  }]
+
+  document.title = 'Login | Mahi mahi'
   
   async function submitLogin({username, password}: LoginType) {
     try {
@@ -38,38 +47,36 @@ const Login = () => {
   }
 
   return (
-    <Template>
-      <div className='login-page'>
-        <div className='login-container'>
-          <div className='login-title'>
-            Log In Factory
-          </div>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={(values) => submitLogin(values)}
-            validationSchema={validationSchema}
-          >
-            {({ errors }: FormikProps<FormikValues>) => (
-              <Form>
-                <label htmlFor="username">Username</label>
-                <div className='error-message'>
-                  <p>{errors.username || '*'}</p>
-                </div>
-                <Field name='username' placeholder='Username' />
-
-                <label htmlFor="password">Password</label>
-                <div className='error-message'>
-                  <p>{errors.password || '*'}</p>
-                </div>
-                <Field name='password' type='password' placeholder='Password'></Field>
-
-                <button type='submit'>Log In</button>
-              </Form>
-            )}
-          </Formik>
-        </div>
+    <div className='col align-center'>
+      <h1 className='mt-5'>
+        Log In Factory
+      </h1>
+      <div className='mt-2 col align-center'>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={(values) => submitLogin(values)}
+          validationSchema={validationSchema}
+        >
+          {({ errors }: FormikProps<FormikValues>) => (
+            <Form className='form-container'>
+              <div className='forms'>
+                {forms.map((form, i: number) =>
+                  <div className='form-field' key={i}>
+                    <label htmlFor={form.type}>{form.placeholder}</label>
+                    <div className='input-form'>
+                      <p className='error-message'>{errors[form.type] || '*'}</p>
+                      <Field name={form.type} type={form.type} placeholder={form.placeholder} />
+                    </div>
+                  </div>
+                )}
+              </div>
+              <button className='submit-button mt-2' type='submit'>Log In</button>
+            </Form>
+          )}
+        </Formik>
+        <a className='mt-2 font-medium' href='/register'>Create Account</a>
       </div>
-    </Template>
+    </div>
   )
 }
 
