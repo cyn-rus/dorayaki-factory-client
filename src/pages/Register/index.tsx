@@ -4,6 +4,7 @@ import { Formik, Field, Form, FormikProps, FormikValues } from "formik"
 import { object, string, ref } from 'yup'
 import axios from '../../api/axios'
 import { Template } from "../../components"
+import { LogFormType } from '../../types'
 
 interface RegisterType {
   email: string
@@ -32,7 +33,7 @@ const validationSchema = object().shape({
     .required("Password is required")
     .matches(
         /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-        "Password must contain at least 8 characters, one uppercase, one number and one special case character"
+        'Invalid Password'
     ),
   confPassword: string()
     .required("Confirmation Password is required")
@@ -45,6 +46,21 @@ const validationSchema = object().shape({
 const Register = () => {
   const [isRegisterSuccess, setIsRegisterSuccess] = useState(false)
   const history = useHistory()
+  const forms: LogFormType[] = [{
+    type: 'email',
+    placeholder: 'Email',
+  }, {
+    type: 'username',
+    placeholder: 'Username',
+  }, {
+    type: 'password',
+    placeholder: 'Password',
+  }, {
+    type: 'confPassword',
+    placeholder: 'Confirmation Password',
+  }]
+
+  document.title = 'Register | Mahi mahi'
 
   async function submitRegister ({email, username, password}: RegisterType) {
     try {
@@ -62,44 +78,34 @@ const Register = () => {
 
   return (
     <Template>
-      <div className='register-page'>
-        <div className='register-container'>
-          <div className='register-title'>
-            Register Account for Factory
-          </div>
+      <div className='col align-center'>
+        <h1 className='mt-5'>
+          Register Account Factory
+        </h1>
+        <div className='mt-2 col align-center'>
           <Formik
             initialValues={initialValues}
             onSubmit={(values) => submitRegister(values)}
             validationSchema={validationSchema}
           >
             {({ errors }: FormikProps<FormikValues>) => (
-              <Form>
-                <label htmlFor="email">Email</label>
-                <div className='error-message'>
-                  <p>{errors.email || '*'}</p>
+              <Form className='form-container'>
+                <div className='forms'>
+                  {forms.map((form, i: number) =>
+                    <div className='form-field' key={i}>
+                      <label htmlFor={form.type}>{form.placeholder}</label>
+                      <div className='input-form'>
+                        <p className='error-message'>{errors[form.type] || '*'}</p>
+                        <Field name={form.type} type={form.type} placeholder={form.placeholder} />
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <Field name='email' placeholder='Email' />
-
-                <label htmlFor="username">Username</label>
-                <div className='error-message'>
-                  <p>{errors.username || '*'}</p>
-                </div>
-                <Field name='username' placeholder='Username' />
-
-                <label htmlFor="password">Password</label>
-                <div className='error-message'>
-                  <p>{errors.password || '*'}</p>
-                </div>
-                <Field name='password' placeholder='Password' type='password' />
-
-                <label htmlFor="confPassword">Confirmation Password</label>
-                <div className='error-message'>
-                  <p>{errors.confPassword || '*'}</p>
-                </div>
-                <Field name='confPassword' placeholder='Confirmation Password' type='password' />
+                <button className='submit-button mt-2' type='submit'>Register</button>
               </Form>
             )}
           </Formik>
+          <a className='mt-2 font-medium' href="/login">Have an Account?</a>
         </div>
       </div>
     </Template>
