@@ -10,4 +10,5 @@ services:
       - ./src:/app/src
     ports:
       - 3000:3000
+    env_file: .env
     command: npm start
