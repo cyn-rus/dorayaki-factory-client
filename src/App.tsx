@@ -1,5 +1,6 @@
 import { Switch, BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import { Recipes, Materials, Login, Register, Request } from './pages'
+import './styles/index.scss'
 
 function App() {
   return (
