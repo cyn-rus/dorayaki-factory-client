@@ -6,13 +6,8 @@ interface Props {
 
 const RecipeCard = ({recipe}: Props) => {
   return (
-    <div className='card-recipe'>
-      <div className='recipe-materials'>
-        <p>{recipe.nama_bahan}</p>
-      </div>
-      <div className='stock-recipe'>
-        <p>{recipe.jumlah}</p>
-      </div>
+    <div className='card card-recipe'>
+      <h3 className='title recipe-materials'>Recipe: {recipe.nama_bahan}</h3>
     </div>
   )
 }
