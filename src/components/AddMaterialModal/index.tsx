@@ -3,30 +3,35 @@ import { object, string, number } from 'yup'
 import type { MaterialType } from '../../types'
 import { axios } from '../../api'
 
+interface Props {
+  closeModal: Function
+}
+
 const initialValues = {
   nama_bahan: '',
   stok: 0
 }
 
 const validationSchema = object().shape({
-  name: string().required('Material name is required'),
-  stock: number().integer().min(0)
+  nama_bahan: string().required('Material name is required'),
+  stok: number().integer().required('Stock is required')
 })
 
-const AddMaterialModal = () => {
+const AddMaterialModal = ({closeModal}: Props) => {
   async function submitAdd({nama_bahan, stok}: MaterialType) {
-    try {
-      await axios.post('/material/add', {
-        nama_bahan: nama_bahan,
-        stok: stok,
-      })
-    } catch (err) {
-      console.log(err)
-    }
+    // try {
+    //   await axios.post('/material/add', {
+    //     nama_bahan: nama_bahan,
+    //     stok: stok,
+    //   })
+        closeModal()
+    // } catch (err) {
+    //   console.log(err)
+    // }
   }
 
   return (
-    <div className='add-modal-material'>
+    <div className='add-modal'>
       <h1 className='modal-title'>Add Material</h1>
       <Formik
         initialValues={initialValues}
@@ -34,18 +39,29 @@ const AddMaterialModal = () => {
         validationSchema={validationSchema}
       >
         {({ errors }: FormikProps<FormikValues>) => (
-          <Form>
-            <label htmlFor="nama_bahan">Material Name</label>
-            <div className='error-message'>
-              <p>{errors.nama_bahan || '*'}</p>
-            </div>
-            <Field name='nama_bahan' placeholder='Material Name' />
+          <Form className='form-container'>
+            <div className='forms'>
+              <div className='form-field'>
+                <label htmlFor="nama_bahan">Material Name</label>
+                <div className='input-form'>
+                  <p className='error-message'>{errors.nama_bahan || '*'}</p>
+                  <Field name='nama_bahan' placeholder='Material Name' />
+                </div>
+              </div>
 
-            <label htmlFor="stock">Stock</label>
-            <div className='error-message'>
-              <p>{errors.jumlah && 'Stok Invalid' || '*'}</p>
+              <div className='form-field'>
+                <label htmlFor="stok">Stock</label>
+                <div className='input-form'>
+                  <p className='error-message'>{errors.stok && 'Stock Invalid' || '*'}</p>
+                  <Field name='stok' placeholder='Stock' />
+                </div>
+              </div>
             </div>
-            <Field name='stock' placeholder='Stock' />
+
+            <div className='row'>
+              <button className='submit-button' type='submit'>Add</button>
+              <button className='submit-button ml-2' onClick={() => closeModal()}>Cancel</button>
+            </div>
           </Form>
         )}
       </Formik>
