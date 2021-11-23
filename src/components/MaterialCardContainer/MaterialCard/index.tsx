@@ -7,15 +7,14 @@ interface Props {
 
 const MaterialCard = ({material, onEdit}: Props) => {
   return (
-    <div className='card-material'>
-      <div className='material-name'>
-        <p>{material.nama_bahan}</p>
-      </div>
-      <div className='stock-material-original'>
-        <p>{material.stok}</p>
+    <div className='card card-material'>
+      <h3 className='title'>{material.nama_bahan}</h3>
+      <div className='material-stock'>
+        <h3>Current Stock</h3>
+        <h3 className=''>{material.stok}</h3>
       </div>
       <div className='edit-material'>
-        <button className='button-edit-material' onClick={() => onEdit(material)}>Edit</button>
+        <button className='button-edit-material' onClick={() => onEdit(material)}>Edit Stock</button>
       </div>
     </div>
   )
