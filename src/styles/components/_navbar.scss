@@ -1,0 +1,32 @@
+nav {
+  background-color: $dark-blue;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  h1 {
+    color: $orange;
+    cursor: pointer;
+
+    &:hover {
+      color: $yellow;
+    }
+  }
+
+  .left-navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    svg {
+      margin-left: 1rem;
+      margin-right: 3rem;
+      cursor: pointer;
+    }
+  }
+
+  .right-navbar {
+    margin-right: 2rem;
+  }
+}
