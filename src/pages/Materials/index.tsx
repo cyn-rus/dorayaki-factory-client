@@ -6,22 +6,39 @@ import { MaterialType } from '../../types'
 
 const Materials = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
-  const [materials, setMaterials] = useState([])
+  const [materials, setMaterials] = useState([{
+    nama_bahan: 'tes',
+    stok: 5
+  }, {
+    nama_bahan: 'tes',
+    stok: 5,
+  }, {
+    nama_bahan: 'tes',
+    stok: 5,
+  }, {
+    nama_bahan: 'tes',
+    stok: 5
+  }, {
+    nama_bahan: 'tes',
+    stok: 5
+  }])
   const [isEditModalOpen, setEditModalOpen] = useState(false)
   const [editMaterial, setEditMaterial] = useState<MaterialType>()
 
-  useEffect(() => {
-    axios.get('/materials')
-      .then(function (res) {
-        setMaterials(res.data)
-      })
-  }, [isAddModalOpen, isEditModalOpen])
+  document.title = 'Materials | Mahi mahi'  
 
-  function closeModal() {
+  // useEffect(() => {
+  //   axios.get('/materials')
+  //     .then(function (res) {
+  //       setMaterials(res.data)
+  //     })
+  // }, [isAddModalOpen, isEditModalOpen])
+
+  function closeAdd() {
     setIsAddModalOpen(false)
   }
 
-  function openModal() {
+  function openAdd() {
     setIsAddModalOpen(true)
   }
 
@@ -37,11 +54,12 @@ const Materials = () => {
 
   return (
     <Template>
-      <div className='material-page'>
-        <div className='material-title'>
+      <div className='mt-1'>
+        <div className='m-2 mb-0 col align-center'>
           <h1>Materials</h1>
-          <h2 className='add-material' onClick={openModal}>Add Material</h2>
+          <h3 className='add-button mt-1' onClick={openAdd}>Add Material</h3>
         </div>
+        <div className='line'>-</div>
         <MaterialCardContainer materials={materials} onEdit={openEdit} />
       </div>
 
@@ -49,16 +67,14 @@ const Materials = () => {
         ariaHideApp={false}
         isOpen={isAddModalOpen}
       >
-        <AddMaterialModal />
-        <button className='close-modal' onClick={closeModal}>Close</button>
+        <AddMaterialModal closeModal={closeAdd} />
       </Modal>
 
       <Modal
         ariaHideApp={false}
         isOpen={isEditModalOpen}
       >
-        <EditMaterialModal material={editMaterial} />
-        <button className='clode-modal' onClick={closeEdit}>Close</button>
+        <EditMaterialModal material={editMaterial} closeModal={closeEdit} />
       </Modal>
 
     </Template>
