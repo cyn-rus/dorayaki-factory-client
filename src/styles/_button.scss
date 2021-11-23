@@ -5,6 +5,7 @@ button {
   background-color: $blue;
   color: $dark-purple;
   font-weight: bold;
+  border-radius: 4px;
 
   &:focus {
     outline: none;
@@ -31,3 +32,10 @@ button {
   }
 }
 
+.button-edit-material {
+  background-color: $dark-blue;
+  color: $orange;
+  font-size: medium;
+  border-radius: 5px;
+  padding: 0.3rem 1rem;
+}
