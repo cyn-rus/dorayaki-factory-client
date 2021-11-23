@@ -8,7 +8,7 @@ interface Props {
 
 const MaterialCardContainer = ({materials, onEdit}: Props) => {
   return (
-    <div className='card-container-material'>
+    <div className='card-container card-container-material'>
       {materials.map((material, idx: number) =>
         <MaterialCard material={material} onEdit={onEdit} key={idx} />
       )}
