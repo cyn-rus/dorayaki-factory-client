@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import Modal  from 'react-modal'
 import { Template, MaterialCardContainer, AddMaterialModal, EditMaterialModal } from '../../components'
 import { axios } from '../../api'
 import { MaterialType } from '../../types'
+import { isAuth } from '../../helper'
 
 const Materials = () => {
+  const history = useHistory()
+  const auth = isAuth()
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [materials, setMaterials] = useState([{
     nama_bahan: 'tes',
@@ -53,31 +57,34 @@ const Materials = () => {
   }
 
   return (
-    <Template>
-      <div className='mt-1'>
-        <div className='m-2 mb-0 col align-center'>
-          <h1>Materials</h1>
-          <h3 className='add-button mt-1' onClick={openAdd}>Add Material</h3>
+    <>
+      {!auth && history.push('/login')}
+      <Template>
+        <div className='mt-1'>
+          <div className='m-2 mb-0 col align-center'>
+            <h1>Materials</h1>
+            <h3 className='add-button mt-1' onClick={openAdd}>Add Material</h3>
+          </div>
+          <div className='line'>-</div>
+          <MaterialCardContainer materials={materials} onEdit={openEdit} />
         </div>
-        <div className='line'>-</div>
-        <MaterialCardContainer materials={materials} onEdit={openEdit} />
-      </div>
 
-      <Modal
-        ariaHideApp={false}
-        isOpen={isAddModalOpen}
-      >
-        <AddMaterialModal closeModal={closeAdd} />
-      </Modal>
+        <Modal
+          ariaHideApp={false}
+          isOpen={isAddModalOpen}
+        >
+          <AddMaterialModal closeModal={closeAdd} />
+        </Modal>
 
-      <Modal
-        ariaHideApp={false}
-        isOpen={isEditModalOpen}
-      >
-        <EditMaterialModal material={editMaterial} closeModal={closeEdit} />
-      </Modal>
+        <Modal
+          ariaHideApp={false}
+          isOpen={isEditModalOpen}
+        >
+          <EditMaterialModal material={editMaterial} closeModal={closeEdit} />
+        </Modal>
 
-    </Template>
+      </Template>
+    </>
   )
 
 }
