@@ -1,0 +1,52 @@
+.add-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  label, .modal-title, input {
+    color: $dark-blue;
+  }
+
+  .form-container .forms .form-field {
+    label {
+      font-size: 1.5rem;
+    }
+
+    .input-form input {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.modal-title {
+  margin-top: 1rem;
+  margin-bottom: 4rem;
+}
+
+.edit-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1, h2, h3 {
+    color: $dark-blue;
+  }
+
+  .material-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .current-stock {
+    margin: 0 2rem;
+  }
+
+  .modal-buttons {
+    button {
+      padding: 0 1rem;
+      font-size: 1.5rem;
+    }
+  }
+}
