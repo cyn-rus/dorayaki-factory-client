@@ -5,7 +5,7 @@ import { object, string, ref } from 'yup'
 import axios from '../../api/axios'
 import { Template } from "../../components"
 import { LogFormType } from '../../types'
-import { isAuth } from '../../helper'
+import { IsAuth } from '../../helper'
 
 interface RegisterType {
   email: string
@@ -45,8 +45,8 @@ const validationSchema = object().shape({
 })
 
 const Register = () => {
-  const auth = isAuth()
-  const [isRegisterSuccess, setIsRegisterSuccess] = useState(false)
+  const auth = IsAuth()
+  const [isRegisterInvalid, setIsRegisterInvalid] = useState(false)
   const history = useHistory()
   const forms: LogFormType[] = [{
     type: 'email',
@@ -72,47 +72,58 @@ const Register = () => {
         password: password,
       })
 
-      console.log(res)
+      if (res) {
+        history.push('/login')
+      }
     } catch (err) {
-      console.log(err)
+      setIsRegisterInvalid(true)
     }
   }
 
   return (
     <>
       {auth && history.push('/recipes')} 
-      <Template>
-        <div className='col align-center'>
-          <h1 className='mt-5'>
-            Register Account Factory
-          </h1>
-          <div className='mt-2 col align-center'>
-            <Formik
-              initialValues={initialValues}
-              onSubmit={(values) => submitRegister(values)}
-              validationSchema={validationSchema}
-            >
-              {({ errors }: FormikProps<FormikValues>) => (
-                <Form className='form-container'>
-                  <div className='forms'>
-                    {forms.map((form, i: number) =>
-                      <div className='form-field' key={i}>
-                        <label htmlFor={form.type}>{form.placeholder}</label>
-                        <div className='input-form'>
-                          <p className='error-message'>{errors[form.type] || '*'}</p>
-                          <Field name={form.type} type={form.type} placeholder={form.placeholder} />
-                        </div>
+      <div className='col align-center'>
+        <h1 className='mt-5'>
+          Register Account Factory
+        </h1>
+        <div className='mt-2 col align-center'>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={(values) => submitRegister(values)}
+            validationSchema={validationSchema}
+          >
+            {({ errors }: FormikProps<FormikValues>) => (
+              <Form className='form-container'>
+                <div className='forms'>
+                  {forms.map((form, i: number) =>
+                    <div className='form-field' key={i}>
+                      <label htmlFor={form.type}>{form.placeholder}</label>
+                      <div className='input-form'>
+                        <p className='error-message'>{errors[form.type] || '*'}</p>
+                        <Field
+                          name={form.type}
+                          type={form.type.toLowerCase().includes('password') ? 'password' : form.type}
+                          placeholder={form.placeholder}
+                          onBlur={() => setIsRegisterInvalid(false)}
+                        />
                       </div>
-                    )}
-                  </div>
-                  <button className='submit-button mt-2' type='submit'>Register</button>
-                </Form>
-              )}
-            </Formik>
-            <a className='mt-2 font-medium' href="/login">Have an Account?</a>
-          </div>
+                    </div>
+                  )}
+                </div>
+                <p
+                  className='error-message'
+                  style={isRegisterInvalid ? {opacity: '1'} : {opacity: '0'}}
+                >
+                  Register Invalid
+                </p>
+                <button className='submit-button mt-2' type='submit'>Register</button>
+              </Form>
+            )}
+          </Formik>
+          <a className='mt-2 font-medium' href="/login">Have an Account?</a>
         </div>
-      </Template>
+      </div>
     </>
   )
 }
