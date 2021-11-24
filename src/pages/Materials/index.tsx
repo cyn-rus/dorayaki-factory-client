@@ -4,11 +4,11 @@ import Modal  from 'react-modal'
 import { Template, MaterialCardContainer, AddMaterialModal, EditMaterialModal } from '../../components'
 import { axios } from '../../api'
 import { MaterialType } from '../../types'
-import { isAuth } from '../../helper'
+import { IsAuth } from '../../helper'
 
 const Materials = () => {
   const history = useHistory()
-  const auth = isAuth()
+  const auth = IsAuth()
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [materials, setMaterials] = useState([{
     nama_bahan: 'tes',
@@ -60,8 +60,8 @@ const Materials = () => {
     <>
       {!auth && history.push('/login')}
       <Template>
-        <div className='mt-1'>
-          <div className='m-2 mb-0 col align-center'>
+        <div>
+          <div className='col align-center'>
             <h1>Materials</h1>
             <h3 className='add-button mt-1' onClick={openAdd}>Add Material</h3>
           </div>
