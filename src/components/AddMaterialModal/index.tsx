@@ -52,7 +52,7 @@ const AddMaterialModal = ({closeModal}: Props) => {
               <div className='form-field'>
                 <label htmlFor="stok">Stock</label>
                 <div className='input-form'>
-                  <p className='error-message'>{errors.stok && 'Stock Invalid' || '*'}</p>
+                  <p className='error-message'>{(errors.stok && 'Stock Invalid') || '*'}</p>
                   <Field name='stok' placeholder='Stock' />
                 </div>
               </div>
