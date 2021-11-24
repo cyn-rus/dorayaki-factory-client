@@ -1,10 +1,10 @@
 import { useHistory } from "react-router-dom"
-import { isAuth } from "../../helper"
+import { IsAuth } from "../../helper"
 import { Template, RequestTable } from "../../components"
 
 const Requests = () => {
   const history = useHistory()
-  const auth = isAuth()
+  const auth = IsAuth()
 
   return (
     <>
