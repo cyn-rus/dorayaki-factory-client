@@ -1,3 +1,10 @@
+.template .username {
+  color: $orange;
+  text-align: right;
+  margin-right: 1rem;
+  margin-top: 1rem;
+}
+
 nav {
   background-color: $dark-blue;
   display: flex;
