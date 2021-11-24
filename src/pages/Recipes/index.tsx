@@ -3,11 +3,11 @@ import { useHistory } from 'react-router-dom'
 import Modal from 'react-modal'
 import { Template, RecipeCardContainer, AddRecipeModal } from '../../components'
 import { axios } from '../../api'
-import { isAuth } from '../../helper'
+import { IsAuth } from '../../helper'
 
 const Recipes = () => {
   const history = useHistory()
-  const auth = isAuth()
+  const auth = IsAuth()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [recipes, setRecipes] = useState([{
     nama_bahan: 'tes',
@@ -70,8 +70,8 @@ const Recipes = () => {
     <>
       {!auth && history.push('/login')}
       <Template>
-        <div className='mt-1'>
-          <div className='m-2 mb-0 col align-center'>
+        <div>
+          <div className='col align-center'>
             <h1>Recipes</h1>
             <h3 className='add-button mt-1' onClick={openModal}>Add Recipe</h3>
           </div>
