@@ -50,3 +50,11 @@
     }
   }
 }
+
+.edit-material-input {
+  font-size: 1rem;
+
+  &:focus {
+    outline: none;
+  }
+}
