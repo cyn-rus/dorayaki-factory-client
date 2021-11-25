@@ -1,42 +1,26 @@
 import { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import Modal  from 'react-modal'
+import { Redirect } from 'react-router-dom'
+import Modal from 'react-modal'
 import { Template, MaterialCardContainer, AddMaterialModal, EditMaterialModal } from '../../components'
 import { axios } from '../../api'
 import { MaterialType } from '../../types'
 import { IsAuth } from '../../helper'
 
 const Materials = () => {
-  const history = useHistory()
   const auth = IsAuth()
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
-  const [materials, setMaterials] = useState([{
-    nama_bahan: 'tes',
-    stok: 5
-  }, {
-    nama_bahan: 'tes',
-    stok: 5,
-  }, {
-    nama_bahan: 'tes',
-    stok: 5,
-  }, {
-    nama_bahan: 'tes',
-    stok: 5
-  }, {
-    nama_bahan: 'tes',
-    stok: 5
-  }])
+  const [materials, setMaterials] = useState([])
   const [isEditModalOpen, setEditModalOpen] = useState(false)
   const [editMaterial, setEditMaterial] = useState<MaterialType>()
 
   document.title = 'Materials | Mahi mahi'  
 
-  // useEffect(() => {
-  //   axios.get('/materials')
-  //     .then(function (res) {
-  //       setMaterials(res.data)
-  //     })
-  // }, [isAddModalOpen, isEditModalOpen])
+  useEffect(() => {
+    axios.get('/getAllBahanBaku')
+      .then(function (res) {
+        setMaterials(res.data)
+      })
+  }, [isAddModalOpen, isEditModalOpen, auth])
 
   function closeAdd() {
     setIsAddModalOpen(false)
@@ -58,7 +42,7 @@ const Materials = () => {
 
   return (
     <>
-      {!auth && history.push('/login')}
+      {!auth && auth !== undefined && <Redirect to='/login' />}
       <Template>
         <div>
           <div className='col align-center'>
@@ -86,7 +70,6 @@ const Materials = () => {
       </Template>
     </>
   )
-
 }
 
 export default Materials
