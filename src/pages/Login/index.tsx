@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { useHistory } from "react-router-dom"
+import { Redirect, useHistory } from "react-router-dom"
 import { Formik, Field, Form, FormikProps, FormikValues } from "formik"
 import { object, string } from 'yup'
 import axios from 'axios'
-import useContext from '../../context'
+import useContext from '../../context/storageManager'
 import { LogFormType } from '../../types'
 import { IsAuth } from '../../helper'
+import { useApp } from '../../context/stateManager'
 
 interface LoginType {
   username: string
@@ -24,9 +25,11 @@ const validationSchema = object().shape({
 
 const Login = () => {
   const [isLoginInvalid, setIsLoginInvalid] = useState(false)
-  const { setData } = useContext()
+  const { setToken } = useContext()
   const history = useHistory()
+  const { setUsername } = useApp()
   const auth = IsAuth()
+
   const forms: LogFormType[] = [{
     type: 'username',
     placeholder: 'Username',
@@ -45,7 +48,9 @@ const Login = () => {
       })
       
       if (res.data.length !== 0) {
-        setData(res.data[0])
+        const data = res.data[0]
+        setToken(data)
+        setUsername(data.username)
         history.push('/recipes')
       } else {
         resetForm()
@@ -58,7 +63,7 @@ const Login = () => {
 
   return (
     <>
-      {auth && history.push('/recipes')}
+      {auth && <Redirect to='/recipes' />}
       <div className='col align-center'>
         <h1 className='mt-5'>
           Log In Factory
@@ -77,11 +82,11 @@ const Login = () => {
                       <label htmlFor={form.type}>{form.placeholder}</label>
                       <div className='input-form'>
                         <p className='error-message'>{errors[form.type] || '*'}</p>
-                        <Field 
-                          name={form.type}
-                          type={form.type}
-                          placeholder={form.placeholder}
-                          onBlur={() => setIsLoginInvalid(false)}
+                      <Field 
+                        name={form.type}
+                        type={form.type}
+                        placeholder={form.placeholder}
+                        onBlur={() => setIsLoginInvalid(false)}
                         />
                       </div>
                     </div>
