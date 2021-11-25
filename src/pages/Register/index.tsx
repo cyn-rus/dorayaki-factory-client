@@ -1,9 +1,8 @@
 import { useState } from 'react'
-import { useHistory } from "react-router-dom"
+import { Redirect, useHistory } from "react-router-dom"
 import { Formik, Field, Form, FormikProps, FormikValues } from "formik"
 import { object, string, ref } from 'yup'
 import axios from '../../api/axios'
-import { Template } from "../../components"
 import { LogFormType } from '../../types'
 import { IsAuth } from '../../helper'
 
@@ -82,7 +81,7 @@ const Register = () => {
 
   return (
     <>
-      {auth && history.push('/recipes')} 
+      {auth && <Redirect to='/recipes' />} 
       <div className='col align-center'>
         <h1 className='mt-5'>
           Register Account Factory
