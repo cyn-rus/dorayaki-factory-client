@@ -1,6 +1,7 @@
 import React from 'react'
 import { useHistory } from "react-router-dom"
-import useContext from '../../context'
+import useContext from '../../context/storageManager'
+import { useApp } from '../../context/stateManager'
 
 interface Props {
   children: React.ReactNode
@@ -8,14 +9,16 @@ interface Props {
 
 const Template = ({ children }: Props) => {
   const history = useHistory()
-  const { data, removeData } = useContext()
+  const { removeToken } = useContext()
+  const { username, setUsername } = useApp()
 
   function changePage(dest: string) {
     history.push(`/${dest}`)
   }
 
   function logOut() {
-    removeData()
+    removeToken()
+    setUsername('')
     history.push('/login')
   }
 
@@ -58,7 +61,7 @@ const Template = ({ children }: Props) => {
           <h1 className='navbar-logout' onClick={logOut}>Log Out</h1>
         </div>
       </nav>
-      {/* <h2 className='username'>Hello, {data}!</h2> */}
+      <h2 className='username'>Hello, {username}!</h2>
       {children}
     </div>
   )
