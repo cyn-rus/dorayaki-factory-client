@@ -1,4 +1,5 @@
 import type { MaterialType } from '../../../types'
+import { capitalize } from '../../../helper'
 
 interface Props {
   material: MaterialType
@@ -8,7 +9,7 @@ interface Props {
 const MaterialCard = ({material, onEdit}: Props) => {
   return (
     <div className='card card-material'>
-      <h3 className='title'>{material.nama_bahan}</h3>
+      <h2 className='title'>{capitalize(material.nama_bahan)}</h2>
       <div className='material-stock'>
         <h3>Current Stock</h3>
         <h3 className=''>{material.stok}</h3>
