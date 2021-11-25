@@ -1,62 +1,32 @@
 import { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import Modal from 'react-modal'
 import { Template, RecipeCardContainer, AddRecipeModal } from '../../components'
 import { axios } from '../../api'
 import { IsAuth } from '../../helper'
+import { INamaBahan } from '../../types'
 
 const Recipes = () => {
-  const history = useHistory()
   const auth = IsAuth()
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [recipes, setRecipes] = useState([{
-    nama_bahan: 'tes',
-    jumlah: 2,
-  }, {
-    nama_bahan: 'tes',
-    jumlah: 2,
-  }, {
-    nama_bahan: 'tes',
-    jumlah: 2,
-  }, {
-    nama_bahan: 'tes',
-    jumlah: 2,
-  }, {
-    nama_bahan: 'tes',
-    jumlah: 2,
-  }])
-  const [materials, setMaterials] = useState([{
-    nama_bahan: 'tes',
-    stok: 5
-  }, {
-    nama_bahan: 'tes',
-    stok: 5,
-  }, {
-    nama_bahan: 'tes',
-    stok: 5,
-  }, {
-    nama_bahan: 'tes',
-    stok: 5
-  }, {
-    nama_bahan: 'tes',
-    stok: 5
-  }])
+  const [recipes, setRecipes] = useState([])
+  const [materials, setMaterials] = useState([])
 
   document.title = 'Recipes | Mahi mahi'
 
-  // useEffect(() => {
-  //   axios.get('/materials')
-  //     .then(function (res) {
-  //       setMaterials(res.data)
-  //     })
-  // }, [])
+  useEffect(() => {
+    axios.get('/getAllBahanBakuNames')
+      .then(function (res) {
+        setMaterials(res.data)
+      })
+  }, [])
   
-  // useEffect(() => {
-  //   axios.get('/recipes')
-  //     .then(function (res) {
-  //       setRecipes(res.data)
-  //     })
-  // }, [isModalOpen])
+  useEffect(() => {
+    axios.get('/getAllResep')
+      .then(function (res) {
+        setRecipes(res.data)
+      })
+  }, [isModalOpen])
 
   function openModal() {
     setIsModalOpen(true)
@@ -68,7 +38,7 @@ const Recipes = () => {
 
   return (
     <>
-      {!auth && history.push('/login')}
+      {!auth && auth !== undefined && <Redirect to='/login' />}
       <Template>
         <div>
           <div className='col align-center'>
@@ -83,7 +53,7 @@ const Recipes = () => {
           ariaHideApp={false}
           isOpen={isModalOpen}
         >
-          <AddRecipeModal materials={materials} closeModal={closeModal} />
+          <AddRecipeModal materialsName={materials} closeModal={closeModal} />
         </Modal>
       </Template>
     </>
