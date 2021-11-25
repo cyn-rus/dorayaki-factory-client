@@ -8,6 +8,7 @@
 }
 
 .card {
+  align-items: center;
   background-color: $green;
   display: flex;
   flex-direction: column ;
@@ -22,22 +23,26 @@
     box-shadow: 0 5px 15px rgba(145, 92, 182, .5);
   }
   
-  .title {
+  .title, h3 {
     color: $dark-blue;
   }
   
   &-material {
-    align-items: center;
+    width: 12rem;
 
     .material-stock {
       margin: 1rem 0;
       display: flex;
       flex-direction: column;
       align-items: center;
+    }
+  }
 
-      h3 {
-        color: $dark-blue;
-      }
+  .materials-name {
+    & > .title {
+      text-decoration: underline;
+      color: $darker-blue;
+      margin-bottom: 10px;
     }
   }
 }
