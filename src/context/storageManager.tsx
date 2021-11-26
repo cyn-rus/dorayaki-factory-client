@@ -13,10 +13,10 @@ export default function useContext() {
 
   const [token, setToken] = useState(getToken())
 
-  const saveToken = (data: IData) => {
-    if (data.token !== undefined) {
-      localStorage.setItem('token', JSON.stringify(data.token))
-      setToken(data.token)
+  const saveToken = (token: string) => {
+    if (token !== undefined) {
+      localStorage.setItem('token', JSON.stringify(token))
+      setToken(token)
     }
   }
 
