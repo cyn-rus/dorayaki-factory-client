@@ -7,15 +7,14 @@ export function IsAuth() {
   const { username, setUsername } = useApp()
 
   if (!username && token) {
-    axios.post('/login', {
-      username: 'test',
-      password: 'hehe'
+    axios.post('/authenticate', {
+      token: token
     }).then(function (res) {
-      const data = res.data[0]
+      const data = res.data
 
-      if (data) {
-        setToken(data)
-        setUsername(data.username)
+      if (data !== 'Token Invalid') {
+        setToken(token)
+        setUsername(data)
         return true
       } else {
         removeToken()
